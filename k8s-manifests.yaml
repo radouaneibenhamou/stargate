@@ -45,7 +45,7 @@ spec:
         - name: experio-registry-secret
       containers:
       - name: stargate
-        image: registry.experioservices.com/stargate:1.0.1
+        image: registry.experioservices.com/stargate:1.0.0
         ports:
         - containerPort: 8000
           name: http
