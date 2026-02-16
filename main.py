@@ -98,7 +98,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 class FileRequest(BaseModel):
     """Request model for file retrieval."""
     files: List[str]
-    always_zip: bool = False
+    always_zip: bool = True
     
     @field_validator('files')
     @classmethod
