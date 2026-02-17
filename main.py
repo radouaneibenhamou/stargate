@@ -102,6 +102,7 @@ async def global_exception_handler(request: Request, exc: Exception):
 class FileRequest(BaseModel):
     """Request model for file retrieval."""
     files: List[str]
+    always_zip: bool = True
     
     @field_validator('files')
     @classmethod
@@ -245,7 +246,6 @@ async def detailed_status(token: str = Depends(verify_token)):
 async def get_files(
     service: str,
     request: FileRequest,
-    always_zip: bool = False,
     token: str = Depends(verify_token)
 ):
     """
@@ -348,7 +348,7 @@ async def get_files(
             )
         
         # If only one file found and not forcing ZIP, return the file directly
-        if len(found_files) == 1 and not always_zip:
+        if len(found_files) == 1 and not request.always_zip:
             file_spec, file_path = found_files[0]
             return StreamingResponse(
                 io.BytesIO(file_path.read_bytes()),
